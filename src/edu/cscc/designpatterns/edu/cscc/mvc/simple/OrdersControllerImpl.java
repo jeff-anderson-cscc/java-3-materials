@@ -1,0 +1,38 @@
+package edu.cscc.designpatterns.edu.cscc.mvc.simple;
+
+import edu.cscc.designpatterns.repository.Order;
+
+import java.util.Scanner;
+
+public class OrdersControllerImpl implements  OrdersController{
+
+    private Order model;
+
+    public OrdersControllerImpl(Order model) {
+        this.model = model;
+    }
+
+    @Override
+    public void show() {
+        OrdersView ordersView = new OrdersViewImpl(this.model, this);
+        ordersView.show();
+    }
+
+    @Override
+    public void edit() {
+        OrdersView ordersView = new OrdersViewImpl(this.model, this);
+        ordersView.edit();
+    }
+
+    @Override
+    public void save(Order order) {
+        this.model.setTotal(order.getTotal());
+        this.model.setCustomerName(order.getCustomerName());
+        this.model.setItemCount(order.getItemCount());
+
+        OrdersView ordersView = new OrdersViewImpl(this.model, this);
+        ordersView.show();
+    }
+
+
+}
