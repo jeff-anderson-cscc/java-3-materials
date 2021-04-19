@@ -1,21 +1,23 @@
 package edu.cscc.exercise;
 
 import edu.cscc.exercise.models.Company;
+import edu.cscc.jdbc.CrudRepository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class InsuranceService {
+public class CompanyRepository implements CrudRepository<Company, Integer> {
 
     private final DataSource dataSource;
 
-    public InsuranceService(DataSource dataSource) {
+    public CompanyRepository(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public List<Company> getCompanies() throws SQLException {
+    public List<Company> findAll() throws SQLException {
         List<Company> companies = new ArrayList<>();
         String sql = "select c.id, c.name from companies c";
         Connection connection = dataSource.getConnection();
@@ -32,7 +34,7 @@ public class InsuranceService {
         return companies;
     }
 
-    public Company getCompany(Integer id) throws SQLException {
+    public Optional<Company> findById(Integer id) throws SQLException {
         String sql = "select c.id, c.name from companies c where c.id = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -41,9 +43,9 @@ public class InsuranceService {
         if (resultSet.next()) {
             int companyId = resultSet.getInt(1);
             String name = resultSet.getString(2);
-            return new Company(companyId, name);
+            return Optional.of(new Company(companyId, name));
         }
-        return null;
+        return Optional.empty();
     }
 
     public Company create(Company company) throws SQLException {
@@ -69,16 +71,12 @@ public class InsuranceService {
         return preparedStatement.executeUpdate();
     }
 
-    public boolean delete(Integer id) throws SQLException {
+    public int delete(Integer id) throws SQLException {
         String sql = "delete from companies c where c.id = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, id);
-        int rows = preparedStatement.executeUpdate();
-        if (rows > 0) {
-            return true;
-        }
-        return false;
+        return preparedStatement.executeUpdate();
     }
 
 
