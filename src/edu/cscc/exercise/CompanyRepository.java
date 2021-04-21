@@ -94,9 +94,22 @@ public class CompanyRepository implements CrudRepository<Company, Long> {
                 rowsUpdated = preparedStatement.executeUpdate();
             }
         }
-
         return rowsUpdated;
     }
+
+    public int dangerousUpdate(Company company) throws SQLException {
+        // NEVER do this
+        int rowsUpdated;
+        String sql = String.format("update companies set name = '%s' where id = %d",
+            company.getName(), company.getId());
+        try (Connection connection = dataSource.getConnection()) {
+            try (Statement statement = connection.createStatement()) {
+                rowsUpdated = statement.executeUpdate(sql);
+            }
+        }
+        return rowsUpdated;
+    }
+
 
     public int delete(Long id) throws SQLException {
         int rowsUpdated;
