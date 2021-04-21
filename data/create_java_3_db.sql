@@ -29,47 +29,26 @@ alter table insured_members add foreign key (company_id) references companies(id
 alter table insurance_policies add foreign key (company_id) references companies(id);
 
 -- companies
-insert into companies (name) values ('Book and Cookie');
-insert into companies (name) values ("Winter's Wonderland");
-insert into companies (name) values ("Bouncy Castle Playland");
+insert into companies (name) values
+   ('Book and Cookie'),
+   ('Winter\'s Wonderland'),
+   ('Bouncy Castle Playland');
 
 -- policies
 insert into insurance_policies (company_id, type)
-values (1, 'dental');
-
-insert into insurance_policies (company_id, type)
-values (1, 'life');
-
-insert into insurance_policies (company_id, type)
-values (1, 'vision');
-
-insert into insurance_policies (company_id, type)
-values (2, 'dental');
-
-insert into insurance_policies (company_id, type)
-values (2, 'life');
-
-insert into insurance_policies (company_id, type)
-values (3, 'vision');
+values (1, 'dental'),
+       (1, 'life'),
+       (1, 'vision'),
+       (2, 'dental'),
+       (2, 'life'),
+       (3, 'vision');
 
 -- members
 insert into insured_members (company_id, first_name, last_name)
-values (1, 'Sarah', 'Gilbert');
-
-insert into insured_members (company_id, first_name, last_name)
-values (1, 'Lacy', 'Dickson');
-
-insert into insured_members (company_id, first_name, last_name)
-values (1, 'Deloras', 'Durgan');
-
-insert into insured_members (company_id, first_name, last_name)
-values (2, 'Bibi', 'Hills');
-
-insert into insured_members (company_id, first_name, last_name)
-values (2, 'Shad', 'Toy');
-
-insert into insured_members (company_id, first_name, last_name)
-values (3, 'Everett', 'Morrison');
-
-insert into insured_members (company_id, first_name, last_name)
-values (3, 'Anton', 'Wolff');
+values (1, 'Sarah', 'Gilbert'),
+       (1, 'Lacy', 'Dickson'),
+       (1, 'Deloras', 'Durgan'),
+       (2, 'Bibi', 'Hills'),
+       (2, 'Shad', 'Toy'),
+       (3, 'Everett', 'Morrison'),
+       (3, 'Anton', 'Wolff');

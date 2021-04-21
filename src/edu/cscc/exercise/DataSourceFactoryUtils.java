@@ -5,7 +5,9 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-public class DataSourceFactory {
+public final class DataSourceFactoryUtils {
+    private DataSourceFactoryUtils() { }
+
     public static final String MYSQL_DB_URL = "MYSQL_DB_URL";
     public static final String MYSQL_DB_USERNAME = "MYSQL_DB_USERNAME";
     public static final String MYSQL_DB_PASSWORD = "MYSQL_DB_PASSWORD";

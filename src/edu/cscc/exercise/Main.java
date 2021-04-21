@@ -1,32 +1,32 @@
 package edu.cscc.exercise;
 
 import edu.cscc.exercise.models.Company;
+import edu.cscc.jdbc.CrudRepository;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
         Properties properties = new Properties();
-        properties.setProperty(DataSourceFactory.MYSQL_DB_URL, "jdbc:mysql://localhost:3306/java_3_db");
-        properties.setProperty(DataSourceFactory.MYSQL_DB_USERNAME, "root");
-        properties.setProperty(DataSourceFactory.MYSQL_DB_PASSWORD, "password");
+        properties.setProperty(DataSourceFactoryUtils.MYSQL_DB_URL, "jdbc:mysql://localhost:3306/java_3_db");
+        properties.setProperty(DataSourceFactoryUtils.MYSQL_DB_USERNAME, "root");
+        properties.setProperty(DataSourceFactoryUtils.MYSQL_DB_PASSWORD, "password");
 
-        DataSource dataSource = DataSourceFactory.buildDataSource(properties);
+        DataSource dataSource = DataSourceFactoryUtils.buildDataSource(properties);
         System.out.printf("Connection open? %b\n", !dataSource.getConnection().isClosed());
 
-        CompanyRepository companyRepository = new CompanyRepository(dataSource);
+        CrudRepository<Company, Long> companyRepository = new CompanyRepository(dataSource);
 
         // Current State - get all companies:
 
-        printAllCompanies(companyRepository);
+        companyRepository.findAll().forEach(System.out::println);
 
         // Get by ID
 
-        System.out.printf("First company: %s\n", companyRepository.findById(1));
+        System.out.printf("First company: %s\n", companyRepository.findById(1L));
 
         // Create:
 
@@ -36,7 +36,7 @@ public class Main {
         newCompany = companyRepository.create(newCompany);
         System.out.printf("New new company after insert: %s\n", newCompany);
 
-        printAllCompanies(companyRepository);
+        companyRepository.findAll().forEach(System.out::println);
 
         // Update:
 
@@ -47,7 +47,7 @@ public class Main {
             companyRepository.update(tmpCompany);
 
             System.out.println("Updated company " + tmpCompany.getId() + "'s name to " + tmpCompany.getName());
-            printAllCompanies(companyRepository);
+            companyRepository.findAll().forEach(System.out::println);
         } else {
             System.out.printf("A company with the id %d could not be found.\n", newCompany.getId());
         }
@@ -62,13 +62,7 @@ public class Main {
             System.out.printf("A company with the id %d could not be found.\n", newCompany.getId());
         }
 
-        printAllCompanies(companyRepository);
+        companyRepository.findAll().forEach(System.out::println);
     }
 
-    private static void printAllCompanies(CompanyRepository companyRepository) throws SQLException {
-        List<Company> companies = companyRepository.findAll();
-        companies.forEach(company -> {
-            System.out.println(company);
-        });
-    }
 }

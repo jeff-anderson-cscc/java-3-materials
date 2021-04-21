@@ -13,7 +13,7 @@ public class DataSourceDemo {
     private static final String MYSQL_DB_USERNAME = "MYSQL_DB_USERNAME";
     private static final String MYSQL_DB_PASSWORD = "MYSQL_DB_PASSWORD";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Properties properties = new Properties();
         properties.setProperty(MYSQL_DB_URL, "jdbc:mysql://localhost:3306/java_3_db");
         properties.setProperty(MYSQL_DB_USERNAME, "root");
@@ -21,13 +21,9 @@ public class DataSourceDemo {
 
         DataSource dataSource = getDataSource(properties);
 
-        try {
-            Connection connection = dataSource.getConnection();
-            System.out.println("Connection is open: " + !connection.isClosed());
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        Connection connection = dataSource.getConnection();
+        System.out.println("Connection is open: " + !connection.isClosed());
+        connection.close();
     }
 
     private static DataSource getDataSource(Properties properties) {
