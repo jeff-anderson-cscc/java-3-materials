@@ -72,11 +72,10 @@ public class CompanyRepository implements CrudRepository<Company, Long> {
         try (Connection connection = dataSource.getConnection())
         {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql,
-                    Statement.RETURN_GENERATED_KEYS);
-            ) {
+                    Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, company.getName());
                 preparedStatement.executeUpdate();
-                try (ResultSet tableKeys = preparedStatement.getGeneratedKeys();) {
+                try (ResultSet tableKeys = preparedStatement.getGeneratedKeys()) {
                     tableKeys.next();
                     company.setId(tableKeys.getLong(1));
                 }
@@ -86,7 +85,7 @@ public class CompanyRepository implements CrudRepository<Company, Long> {
     }
 
     public int update(Company company) throws SQLException {
-        int rowsUpdated = 0;
+        int rowsUpdated;
         String sql = "update companies set name = ? where id = ?";
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -100,7 +99,7 @@ public class CompanyRepository implements CrudRepository<Company, Long> {
     }
 
     public int delete(Long id) throws SQLException {
-        int rowsUpdated = 0;
+        int rowsUpdated;
         String sql = "delete from companies c where c.id = ?";
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
