@@ -27,6 +27,7 @@ create table insurance_policies (
 );
 
 create table insured_member_insurance_policies (
+                                                     id bigint unsigned auto_increment primary key,
                                                      insured_member_id bigint unsigned not null,
                                                      insurance_policy_id bigint unsigned not null
 );
