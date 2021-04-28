@@ -16,13 +16,13 @@ public class InsurancePolicy {
     @ManyToOne
     private Company company;
 
+    // https://www.baeldung.com/jpa-cascade-types
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "insured_member_insurance_policies",
-            joinColumns = @JoinColumn(name = "insured_member_id"),
-            inverseJoinColumns = @JoinColumn(name = "insurance_policy_id"))
+            joinColumns = @JoinColumn(name = "insurance_policy_id"),
+            inverseJoinColumns = @JoinColumn(name = "insured_member_id"))
     List<InsuredMember> insuredMembers = new ArrayList<>();
-
 
     public InsurancePolicy() {
     }

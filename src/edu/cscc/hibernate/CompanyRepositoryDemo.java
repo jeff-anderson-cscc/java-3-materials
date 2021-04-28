@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 import java.util.Optional;
 import java.util.stream.LongStream;
 
-public class HibernateDemo {
+public class CompanyRepositoryDemo {
     public static void main(String[] args) {
         // A SessionFactory is very expensive to create, so, for any given database, the application should have only one associated SessionFactory. The SessionFactory maintains services that Hibernate uses across all Session(s) such as second level caches, connection pools, transaction system integrations, etc.
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Java3Demo");

@@ -22,8 +22,8 @@ public class InsuredMember {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "insured_member_insurance_policies",
-            joinColumns = @JoinColumn(name = "insurance_policy_id"),
-            inverseJoinColumns = @JoinColumn(name = "insured_member_id"))
+            joinColumns = @JoinColumn(name = "insured_member_id"),
+            inverseJoinColumns = @JoinColumn(name = "insurance_policy_id"))
     List<InsurancePolicy> policies = new ArrayList<>();
 
     public InsuredMember() {

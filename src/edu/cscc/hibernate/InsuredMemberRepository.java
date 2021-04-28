@@ -3,7 +3,9 @@ package edu.cscc.hibernate;
 import edu.cscc.hibernate.models.InsurancePolicy;
 import edu.cscc.hibernate.models.InsuredMember;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.util.List;
 import java.util.Optional;
 
 public class InsuredMemberRepository implements CrudRepository<InsuredMember, Long> {
@@ -25,7 +27,7 @@ public class InsuredMemberRepository implements CrudRepository<InsuredMember, Lo
     }
 
     @Override
-    public Iterable<InsuredMember> findAll() {
+    public List<InsuredMember> findAll() {
         return entityManagerFactory.createEntityManager().createQuery(
                 "select im from InsuredMember im" )
                 .getResultList();
@@ -33,12 +35,19 @@ public class InsuredMemberRepository implements CrudRepository<InsuredMember, Lo
 
     @Override
     public InsuredMember create(InsuredMember entity) {
-        return null;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(entity);
+        entityManager.getTransaction().commit();
+        return entity;
     }
 
     @Override
     public void update(InsuredMember entity) {
-
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(entity);
+        entityManager.getTransaction().commit();
     }
 
     @Override

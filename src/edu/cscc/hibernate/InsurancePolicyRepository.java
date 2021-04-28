@@ -5,6 +5,7 @@ import edu.cscc.hibernate.models.InsurancePolicy;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.util.List;
 import java.util.Optional;
 
 public class InsurancePolicyRepository implements CrudRepository<InsurancePolicy, Long> {
@@ -27,7 +28,7 @@ public class InsurancePolicyRepository implements CrudRepository<InsurancePolicy
     }
 
     @Override
-    public Iterable<InsurancePolicy> findAll() {
+    public List<InsurancePolicy> findAll() {
         return entityManagerFactory.createEntityManager().createQuery(
                 "select ip from InsurancePolicy ip" )
                 .getResultList();

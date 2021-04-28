@@ -5,6 +5,7 @@ import edu.cscc.hibernate.models.Company;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class CompanyRepository implements CrudRepository<Company, Long> {
@@ -25,7 +26,7 @@ public class CompanyRepository implements CrudRepository<Company, Long> {
     }
 
     @Override
-    public Iterable<Company> findAll() {
+    public List<Company> findAll() {
         return entityManagerFactory.createEntityManager().createQuery(
                 "select c from Company c" )
                 .getResultList();
