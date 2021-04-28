@@ -9,27 +9,27 @@ drop table if exists insured_members;
 drop table if exists companies;
 
 create table companies (
-                           id int(9) unsigned auto_increment primary key,
+                           id bigint unsigned auto_increment primary key,
                            name varchar(255) not null
 );
 
 create table insured_members (
-                                 id int(9) unsigned auto_increment primary key,
+                                 id bigint unsigned auto_increment primary key,
                                  first_name varchar(255) not null,
                                  last_name varchar(255) not null,
-                                 company_id int(9) unsigned not null
+                                 company_id bigint unsigned not null
 );
 
 create table insurance_policies (
-                                    id int(9) unsigned auto_increment primary key,
-                                    company_id int(9) unsigned not null,
+                                    id bigint unsigned auto_increment primary key,
+                                    company_id bigint unsigned not null,
                                     type varchar(30) not null
 );
 
 create table insured_member_insurance_policies (
-                                                     id int(9) unsigned auto_increment primary key,
-                                                     insured_member_id int(9) unsigned not null,
-                                                     insurance_policy_id int(9) unsigned not null
+                                                     id bigint unsigned auto_increment primary key,
+                                                     insured_member_id bigint unsigned not null,
+                                                     insurance_policy_id bigint unsigned not null
 );
 
 alter table insured_members add foreign key (company_id) references companies(id);
@@ -44,22 +44,22 @@ insert into companies (name) values ("Bouncy Castle Playland");
 
 -- policies
 insert into insurance_policies (company_id, type)
-values (1, 'dental');
+values (1, 'DENTAL');
 
 insert into insurance_policies (company_id, type)
-values (1, 'life');
+values (1, 'LIFE');
 
 insert into insurance_policies (company_id, type)
-values (1, 'vision');
+values (1, 'VISION');
 
 insert into insurance_policies (company_id, type)
-values (2, 'dental');
+values (2, 'DENTAL');
 
 insert into insurance_policies (company_id, type)
-values (2, 'life');
+values (2, 'LIFE');
 
 insert into insurance_policies (company_id, type)
-values (3, 'vision');
+values (3, 'VISION');
 
 -- members
 insert into insured_members (company_id, first_name, last_name)

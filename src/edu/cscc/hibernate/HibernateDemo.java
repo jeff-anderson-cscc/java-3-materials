@@ -10,7 +10,7 @@ public class HibernateDemo {
     public static void main(String[] args) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Java3Demo");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Company company = entityManager.find(Company.class, 1);
+        Company company = entityManager.find(Company.class, 1L);
         System.out.println("Company name: " + company.getName());
     }
 }
