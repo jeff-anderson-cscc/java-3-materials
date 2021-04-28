@@ -17,12 +17,12 @@ create table insured_members (
                                  id bigint unsigned auto_increment primary key,
                                  first_name varchar(255) not null,
                                  last_name varchar(255) not null,
-                                 company_id bigint(9) unsigned not null
+                                 company_id bigint unsigned not null
 );
 
 create table insurance_policies (
                                     id bigint unsigned auto_increment primary key,
-                                    company_id bigint(9) unsigned not null,
+                                    company_id bigint unsigned not null,
                                     type varchar(30) not null
 );
 
