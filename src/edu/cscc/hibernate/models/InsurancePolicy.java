@@ -1,6 +1,7 @@
 package edu.cscc.hibernate.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +15,14 @@ public class InsurancePolicy {
     private InsurancePolicyType type;
     @ManyToOne
     private Company company;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "insured_member_insurance_policies",
+            joinColumns = @JoinColumn(name = "insured_member_id"),
+            inverseJoinColumns = @JoinColumn(name = "insurance_policy_id"))
+    List<InsuredMember> insuredMembers = new ArrayList<>();
+
 
     public InsurancePolicy() {
     }
@@ -52,7 +61,7 @@ public class InsurancePolicy {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         InsurancePolicy insurancePolicy = (InsurancePolicy) obj;
-        return Objects.equals(id, insurancePolicy.id);
+        return Objects.equals(id, insurancePolicy.getId());
     }
 
     @Override

@@ -9,27 +9,26 @@ drop table if exists insured_members;
 drop table if exists companies;
 
 create table companies (
-                           id int(9) unsigned auto_increment primary key,
+                           id bigint unsigned auto_increment primary key,
                            name varchar(255) not null
 );
 
 create table insured_members (
-                                 id int(9) unsigned auto_increment primary key,
+                                 id bigint unsigned auto_increment primary key,
                                  first_name varchar(255) not null,
                                  last_name varchar(255) not null,
-                                 company_id int(9) unsigned not null
+                                 company_id bigint(9) unsigned not null
 );
 
 create table insurance_policies (
-                                    id int(9) unsigned auto_increment primary key,
-                                    company_id int(9) unsigned not null,
+                                    id bigint unsigned auto_increment primary key,
+                                    company_id bigint(9) unsigned not null,
                                     type varchar(30) not null
 );
 
 create table insured_member_insurance_policies (
-                                                     id int(9) unsigned auto_increment primary key,
-                                                     insured_member_id int(9) unsigned not null,
-                                                     insurance_policy_id int(9) unsigned not null
+                                                     insured_member_id bigint unsigned not null,
+                                                     insurance_policy_id bigint unsigned not null
 );
 
 alter table insured_members add foreign key (company_id) references companies(id);
