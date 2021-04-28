@@ -1,10 +1,9 @@
 package edu.cscc.hibernate;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class EntityManagerProvider {
+public final class EntityManagerProvider {
 
     /*
     SessionFactory (org.hibernate.SessionFactory)
@@ -14,7 +13,7 @@ public class EntityManagerProvider {
 
 
     EntityManager entityManager;
-    private static EntityManagerProvider instance;
+    private volatile static EntityManagerProvider instance;
 
     private EntityManagerProvider(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -22,9 +21,11 @@ public class EntityManagerProvider {
 
     public static EntityManagerProvider getInstance() {
         if (instance == null) {
-            instance = new EntityManagerProvider(
-               Persistence.createEntityManagerFactory("Java3Demo").createEntityManager()
-            );
+            synchronized (EntityManagerProvider.class) {
+                instance = new EntityManagerProvider(
+                        Persistence.createEntityManagerFactory("Java3Demo").createEntityManager()
+                );
+            }
         }
         return instance;
     }

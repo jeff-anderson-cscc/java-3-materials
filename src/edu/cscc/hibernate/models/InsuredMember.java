@@ -76,8 +76,8 @@ public class InsuredMember {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj) { return true; }
+        if (obj == null || getClass() != obj.getClass()) { return false; }
         InsuredMember insuredMember = (InsuredMember) obj;
         return Objects.equals(id, insuredMember.getId());
     }
