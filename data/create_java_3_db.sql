@@ -44,22 +44,22 @@ insert into companies (name) values ("Bouncy Castle Playland");
 
 -- policies
 insert into insurance_policies (company_id, type)
-values (1, 'dental');
+values (1, 'DENTAL');
 
 insert into insurance_policies (company_id, type)
-values (1, 'life');
+values (1, 'LIFE');
 
 insert into insurance_policies (company_id, type)
-values (1, 'vision');
+values (1, 'VISION');
 
 insert into insurance_policies (company_id, type)
-values (2, 'dental');
+values (2, 'DENTAL');
 
 insert into insurance_policies (company_id, type)
-values (2, 'life');
+values (2, 'LIFE');
 
 insert into insurance_policies (company_id, type)
-values (3, 'vision');
+values (3, 'VISION');
 
 -- members
 insert into insured_members (company_id, first_name, last_name)
