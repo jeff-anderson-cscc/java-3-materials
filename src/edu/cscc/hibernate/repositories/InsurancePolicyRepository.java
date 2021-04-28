@@ -1,41 +1,40 @@
-package edu.cscc.hibernate;
+package edu.cscc.hibernate.repositories;
 
-import edu.cscc.hibernate.models.Company;
+import edu.cscc.hibernate.models.InsurancePolicy;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class CompanyRepository implements CrudRepository<Company, Long> {
+public class InsurancePolicyRepository implements CrudRepository<InsurancePolicy, Long> {
 
     EntityManagerFactory entityManagerFactory;
 
-    public CompanyRepository(EntityManagerFactory entityManagerFactory) {
+    public InsurancePolicyRepository(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
 
+
     @Override
-    public Optional<Company> findById(Long primaryKey) {
-        Company company = entityManagerFactory.createEntityManager().find(Company.class, primaryKey);
-        if (company != null) {
-            return Optional.of(company);
+    public Optional<InsurancePolicy> findById(Long primaryKey) {
+        InsurancePolicy insurancePolicy = entityManagerFactory.createEntityManager().find(
+                InsurancePolicy.class, primaryKey);
+        if (insurancePolicy != null) {
+            return Optional.of(insurancePolicy);
         }
         return Optional.empty();
     }
 
     @Override
-    public List<Company> findAll() {
+    public List<InsurancePolicy> findAll() {
         return entityManagerFactory.createEntityManager().createQuery(
-                "select c from Company c" )
+                "select ip from InsurancePolicy ip" )
                 .getResultList();
     }
 
-    // https://www.baeldung.com/hibernate-save-persist-update-merge-saveorupdate
-
     @Override
-    public Company create(Company entity) {
+    public InsurancePolicy create(InsurancePolicy entity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(entity);
@@ -44,7 +43,7 @@ public class CompanyRepository implements CrudRepository<Company, Long> {
     }
 
     @Override
-    public void update(Company entity) {
+    public void update(InsurancePolicy entity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.merge(entity);
@@ -54,21 +53,12 @@ public class CompanyRepository implements CrudRepository<Company, Long> {
     @Override
     public void delete(Long primaryKey) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Company company = entityManager.find(Company.class, primaryKey);
-        if (company == null) {
+        InsurancePolicy policy = entityManager.find(InsurancePolicy.class, primaryKey);
+        if (policy == null) {
             throw new IllegalArgumentException("Entity does not exist");
         }
         entityManager.getTransaction().begin();
-        entityManager.remove(company);
+        entityManager.remove(policy);
         entityManager.getTransaction().commit();
     }
-
-
-    public Iterable<Company> findByName(String companyName) {
-        return entityManagerFactory.createEntityManager().createQuery(
-                "select c from Company c where c.name like :name" )
-                .setParameter("name", companyName)
-                .getResultList();
-    }
-
 }

@@ -1,4 +1,4 @@
-package edu.cscc.hibernate;
+package edu.cscc.hibernate.repositories;
 
 import java.sql.SQLException;
 import java.util.List;

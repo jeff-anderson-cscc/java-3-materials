@@ -1,6 +1,7 @@
 package edu.cscc.hibernate;
 
 import edu.cscc.hibernate.models.Company;
+import edu.cscc.hibernate.repositories.CompanyRepository;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

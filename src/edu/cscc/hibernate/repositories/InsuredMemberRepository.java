@@ -1,41 +1,39 @@
-package edu.cscc.hibernate;
+package edu.cscc.hibernate.repositories;
 
-import edu.cscc.hibernate.models.Company;
-import edu.cscc.hibernate.models.InsurancePolicy;
+import edu.cscc.hibernate.models.InsuredMember;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Optional;
 
-public class InsurancePolicyRepository implements CrudRepository<InsurancePolicy, Long> {
+public class InsuredMemberRepository implements CrudRepository<InsuredMember, Long> {
 
     EntityManagerFactory entityManagerFactory;
 
-    public InsurancePolicyRepository(EntityManagerFactory entityManagerFactory) {
+    public InsuredMemberRepository(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
 
-
     @Override
-    public Optional<InsurancePolicy> findById(Long primaryKey) {
-        InsurancePolicy insurancePolicy = entityManagerFactory.createEntityManager().find(
-                InsurancePolicy.class, primaryKey);
-        if (insurancePolicy != null) {
-            return Optional.of(insurancePolicy);
+    public Optional<InsuredMember> findById(Long primaryKey) {
+        InsuredMember insuredMember = entityManagerFactory.createEntityManager().find(
+                InsuredMember.class, primaryKey);
+        if (insuredMember != null) {
+            return Optional.of(insuredMember);
         }
         return Optional.empty();
     }
 
     @Override
-    public List<InsurancePolicy> findAll() {
+    public List<InsuredMember> findAll() {
         return entityManagerFactory.createEntityManager().createQuery(
-                "select ip from InsurancePolicy ip" )
+                "select im from InsuredMember im" )
                 .getResultList();
     }
 
     @Override
-    public InsurancePolicy create(InsurancePolicy entity) {
+    public InsuredMember create(InsuredMember entity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(entity);
@@ -44,7 +42,7 @@ public class InsurancePolicyRepository implements CrudRepository<InsurancePolicy
     }
 
     @Override
-    public void update(InsurancePolicy entity) {
+    public void update(InsuredMember entity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.merge(entity);
@@ -54,12 +52,13 @@ public class InsurancePolicyRepository implements CrudRepository<InsurancePolicy
     @Override
     public void delete(Long primaryKey) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        InsurancePolicy policy = entityManager.find(InsurancePolicy.class, primaryKey);
-        if (policy == null) {
+        InsuredMember insuredMember = entityManager.find(
+                InsuredMember.class, primaryKey);
+        if (insuredMember == null) {
             throw new IllegalArgumentException("Entity does not exist");
         }
         entityManager.getTransaction().begin();
-        entityManager.remove(policy);
+        entityManager.remove(insuredMember);
         entityManager.getTransaction().commit();
     }
 }
