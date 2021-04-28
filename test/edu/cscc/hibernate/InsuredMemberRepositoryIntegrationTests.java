@@ -107,4 +107,18 @@ public class InsuredMemberRepositoryIntegrationTests {
         assertTrue(updatedMember.get().getPolicies().size() == 1);
     }
 
+    @Test
+    @Order(7)
+    @DisplayName("It can delete member")
+    public void test_07() {
+        // Pre-condition violation: Only continue if TRUE
+        assumeTrue(this.passBetweenTestsMember != null,
+                "this.passBetweenTestsMember must not be null");
+        Long savedID = this.passBetweenTestsMember.getId();
+        insuredMemberRepository.delete(savedID);
+        Optional<InsuredMember> updatedMember = insuredMemberRepository.findById(savedID);
+        assertFalse(updatedMember.isPresent());
+    }
+
+
 }

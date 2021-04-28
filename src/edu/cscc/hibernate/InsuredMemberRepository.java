@@ -52,6 +52,14 @@ public class InsuredMemberRepository implements CrudRepository<InsuredMember, Lo
 
     @Override
     public void delete(Long primaryKey) {
-
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        InsuredMember insuredMember = entityManager.find(
+                InsuredMember.class, primaryKey);
+        if (insuredMember == null) {
+            throw new IllegalArgumentException("Entity does not exist");
+        }
+        entityManager.getTransaction().begin();
+        entityManager.remove(insuredMember);
+        entityManager.getTransaction().commit();
     }
 }
