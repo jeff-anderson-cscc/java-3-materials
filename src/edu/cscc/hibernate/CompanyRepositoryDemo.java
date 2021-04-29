@@ -13,6 +13,8 @@ public class CompanyRepositoryDemo {
         // A SessionFactory is very expensive to create, so, for any given database, the application should have only one associated SessionFactory. The SessionFactory maintains services that Hibernate uses across all Session(s) such as second level caches, connection pools, transaction system integrations, etc.
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Java3Demo");
         CompanyRepository companyRepository = new CompanyRepository(entityManagerFactory);
+
+        System.out.println("Find by ID");
         LongStream.rangeClosed(1, 5).forEach((searchKey) -> {
             Optional<Company> company = companyRepository.findById(searchKey);
             if (company.isPresent()) {

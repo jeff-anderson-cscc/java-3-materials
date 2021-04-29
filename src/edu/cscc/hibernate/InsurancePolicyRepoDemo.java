@@ -16,6 +16,8 @@ public class InsurancePolicyRepoDemo {
         // A SessionFactory is very expensive to create, so, for any given database, the application should have only one associated SessionFactory. The SessionFactory maintains services that Hibernate uses across all Session(s) such as second level caches, connection pools, transaction system integrations, etc.
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Java3Demo");
         InsurancePolicyRepository insurancePolicyRepository = new InsurancePolicyRepository(entityManagerFactory);
+
+        System.out.println("Find by ID");
         LongStream.rangeClosed(1, 5).forEach((searchKey) -> {
             Optional<InsurancePolicy> insurancePolicy = insurancePolicyRepository.findById(searchKey);
             if (insurancePolicy.isPresent()) {
@@ -56,30 +58,5 @@ public class InsurancePolicyRepoDemo {
             insurancePolicyRepository.findAll().forEach(System.out::println);
 
         }
-
-
-
-        /*
-
-        Company newCompany = new Company();
-        newCompany.setName("Jeff's company");
-        System.out.printf("New new company before insert: %s\n", newCompany);
-        newCompany = companyRepository.create(newCompany);
-        System.out.printf("New new company after insert: %s\n", newCompany);
-
-        companyRepository.findAll().forEach(System.out::println);
-
-        System.out.println("UPDATE:");
-        newCompany.setName("Jeff's Fortune 100 Company");
-        companyRepository.update(newCompany);
-        companyRepository.findAll().forEach(System.out::println);
-
-        System.out.println("DELETE:");
-        System.out.println("Before delete of: " + newCompany);
-        companyRepository.delete(newCompany.getId());
-        System.out.println("After delete:");
-        companyRepository.findAll().forEach(System.out::println);
-
-         */
     }
 }
